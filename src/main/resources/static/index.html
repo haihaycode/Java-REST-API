@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Vendor Form</title>
+</head>
+<body>
+<h2>Cloud Vendor Form</h2>
+<form id="cloudVendorForm">
+    <label for="vendorId">Vendor ID:</label>
+    <input type="text" id="vendorId" name="vendorId" required><br>
+
+    <label for="vendorName">Vendor Name:</label>
+    <input type="text" id="vendorName" name="vendorName" required><br>
+
+    <label for="vendorAddress">Vendor Address:</label>
+    <input type="text" id="vendorAddress" name="vendorAddress" required><br>
+
+    <label for="vendorPhoneNumber">Vendor Phone Number:</label>
+    <input type="text" id="vendorPhoneNumber" name="vendorPhoneNumber" required><br>
+
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script>
+    function submitForm() {
+        var formData = {
+            vendorId: document.getElementById('vendorId').value,
+            vendorName: document.getElementById('vendorName').value,
+            vendorAddress: document.getElementById('vendorAddress').value,
+            vendorPhoneNumber: document.getElementById('vendorPhoneNumber').value
+        };
+        var jsonString = JSON.stringify(formData)
+        fetch('http://localhost:8080/cloudVendor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: jsonString
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Response:', data);
+                // Xử lý phản hồi ở đây
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Xử lý lỗi (hiển thị thông báo lỗi)
+            });
+    }
+
+</script>
+</body>
+</html>
